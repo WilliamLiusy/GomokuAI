@@ -54,7 +54,7 @@ Document Credit: [陈文迪](https://github.com/ChenWendi2001) 游灏溢
 
 #### 算法评测
 
-- judge文件夹中含有一个算力不弱的五子棋AI：`baseline`，你可以用于测试AI的性能~~，以及你本人五子棋的水平。~~
+- judge文件夹中含有一个算力不弱的五子棋AI：`baseline`，你可以用于测试AI的性能。
 
 - 运行方式：编译你的AI，接着执行`python judge.py ai0path/human ai1path/human`，写在前面的表示先手，后面的表示后手，例如：`python judge.py ./sample human`
 
@@ -97,13 +97,13 @@ gantt
     title 项目总体安排
     axisFormat %m/%d-%a
     section 五子棋AI
-    AI算法基础  :2023-06-19, 18d
+    AI算法基础  :active,2023-06-19, 18d
     CodeReview :crit,2023-07-05,2d
     CodeReview :crit,2023-07-10,2d
-    强化学习/蒙特卡洛搜索bonus:active,2023-06-26,16d
+    强化学习/蒙特卡洛搜索bonus:2023-06-26,16d
     section 前端开发
     学习语言      :done, 2023-06-26, 2d
-    前后端交互实现 :2023-06-26, 16d
+    前后端交互实现 :active,2023-06-26, 16d
     提交报告      :crit, 2023-07-05, 7d
     CodeReview  :crit, 2023-07-10, 2d
     路演				:crit, 2d
