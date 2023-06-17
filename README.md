@@ -2,6 +2,7 @@
 负责人：邵方昊 杨宇骁
 
 Codebase Credit: [张志成](https://github.com/Gabr1e1)
+
 Document Credit: [陈文迪](https://github.com/ChenWendi2001) 游灏溢
 
 ### 课程内容
@@ -15,7 +16,8 @@ Document Credit: [陈文迪](https://github.com/ChenWendi2001) 游灏溢
 - **AI单步推理时间限制：5s**
 - 必做：实现Minimax搜索，alpha-beta剪枝，迭代加深搜索，性能优化（例如启发式搜索，Zobrist缓存），支持人机对战的前端
 - 选做：蒙特卡洛树搜索，强化学习相关算法的探索，或是其他创新性的优化策略
-- 60%算法实现(70%：超过50%胜率打败Baseline，30%：Code Review)
+- 30%算法实现
+- 30%Code Review
 - 40%前端展示
 
 ### 开发指南
@@ -33,7 +35,7 @@ Document Credit: [陈文迪](https://github.com/ChenWendi2001) 游灏溢
 
 #### 算法评测
 
-- 安装以下python包
+- 运行主程序需要以下python包
   ```
   subprocess
   timeout_decorator
@@ -42,6 +44,14 @@ Document Credit: [陈文迪](https://github.com/ChenWendi2001) 游灏溢
   time
   ```
 
+  你可以使用
+  
+  ```
+  pip install -r requirements.txt
+  ```
+  
+  来安装包依赖。如遇到困难请及时提出。
+  
 - 运行方式：编译你的AI，接着执行`python judge.py ai0path/human ai1path/human`，写在前面的表示先手，后面的表示后手，例如：`python judge.py ./sample human`
 
 - **注意：** 你可以通过更改judge.py来输出更多信息

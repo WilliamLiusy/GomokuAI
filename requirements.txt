@@ -1,0 +1,2 @@
+numpy==1.23.4
+timeout_decorator==0.5.0
