@@ -38,4 +38,3 @@ pip-delete-this-directory.txt
 
 *.o
 .DS_Store
-doc/alphazero.pptx

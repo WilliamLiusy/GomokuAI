@@ -9,10 +9,9 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 def index():
     return render_template('index.html')
 
-@app.route('/action/<x>+<y>', methods=['GET'])
+@app.route('/action/a/<x>+<y>', methods=['GET'])
 def get_data(x,y):
-    print(x, y)
-    time.sleep(10)
+    time.sleep(3)
     return jsonify([int(x)+1, int(y)+1])
 
 if __name__ == '__main__':

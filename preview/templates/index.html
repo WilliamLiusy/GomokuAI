@@ -10,13 +10,13 @@
             <span>Hello World</span>
         </div>
         <script>
-            alert("Hello World!");
+            window.alert("Hello World!");
             document.getElementById("content").innerText = 'World'
             var get = function(res){
                 console.log("Hello World")
                 alert("Hello")
             }
-            $.get("action/1+1", (data, status) => {
+            $.get("action/a/1+1", (data, status) => {
                 console.log(data)
             })
         </script>
