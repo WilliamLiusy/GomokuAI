@@ -50,7 +50,7 @@ Document Credit: [陈文迪](https://github.com/ChenWendi2001) 游灏溢
 
 - `ai_side`变量表示你的AI是哪一边，0黑1白，`ai_name`可以随便填写
 
- `AIController.h`不需要修改，提交时也仅需要提交`yourcode.cpp`
+ `AIController.h`不需要修改，提交时也仅需要提交 `yourcode.cpp`
 
 #### 算法评测
 
