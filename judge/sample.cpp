@@ -139,12 +139,16 @@ int getScore(int t) {        //black is to maxmize it
 int depth_limit = 1;
 const int INF = 1e8;
 
+
+
+
 int getMaxValue(int dep, int Min, int Max);
 int getMinValue(int dep, int Min, int Max) {
     if(dep > depth_limit)
     {
         return getScore(1);
     }
+
     for(int x = 0; x < 15; x++)
         for(int y = 0; y < 15; y++)
         {
