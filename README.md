@@ -146,3 +146,4 @@ gantt
 - W3Schools： https://www.w3school.com.cn/
 - jQuery教程： https://www.runoob.com/jquery/jquery-tutorial.html
 
+# GomokuAI
