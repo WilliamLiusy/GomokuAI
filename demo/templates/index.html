@@ -1,29 +1,39 @@
 <!DOCTYPE html>
-<html lang="en-US">
-
+<html lang="en">
 <head>
-    <title>Gomoku</title>
-    <link type="text/css" rel="stylesheet" href="../static/css/style.css">
-    <script src="../static/lib/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>五子棋</title>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
-
 <body>
-
-    <h1>Gomoku Playground v0.1</h1>
-    <p id="textboard", class="aa">
-        
-    </p>
+    <header>
+        <h1>五子棋</h1>
+    </header>
+    
+    
+    <div id="game-board" class="board"> </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() { /* 等待DOM加载完成 */
+        let board = document.getElementById('game-board'); /* 获取棋盘容器 */
+        const boardSize = 15; /* 棋盘大小为15x15 */
 
-        $.get("/action/10+10", (data, status) => {
-            console.log(data);
-            $("#textboard").text(data);
-            $(".aa").text(data);
-        })
-
+        // 动态生成棋盘
+        for (let i = 0; i < boardSize; i++) {
+            let row = document.createElement('div'); /* 创建行容器 */
+            for (let j = 0; j < boardSize; j++) {
+                let cell = document.createElement('div'); /* 创建单元格 */
+                cell.className = 'cell'; /* 给单元格添加CSS类 */
+                cell.addEventListener('click', function() { /* 为单元格添加点击事件 */
+                    // 这里可以添加放置棋子的逻辑
+                    console.log(`Cell ${i}-${j} clicked`); /* 控制台输出点击位置 */
+                });
+                row.appendChild(cell); /* 将单元格添加到行容器 */
+            }
+            board.appendChild(row); /* 将行容器添加到棋盘容器 */
+        }
+        });
     </script>
 
 </body>
-
 </html>

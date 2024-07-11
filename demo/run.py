@@ -9,7 +9,6 @@ def index():
     return render_template('index.html')
 
 
-
 @app.route('/action/<x>+<y>', methods=['GET'])
 def get_data(x,y):
     return jsonify([int(x)+1, int(y)+1])

@@ -1,11 +1,12 @@
-body {
-    padding-top: 28px;
-    width: 100%;
-
-    font-family: "Microsoft soft";
+.board {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr); /* 创建15列 */
+    grid-template-rows: repeat(15, 1fr); /* 创建15行 */
+    gap: 1px; /* 单元格之间的间隙 */
 }
 
-h1 {
-    text-align: center;
-    color: #1E88C7
+.board > div {
+    width: 30px; /* 单元格的宽度 */
+    height: 30px; /* 单元格的高度 */
+    background-color:#ddd; /* 单元格的背景色 */
 }

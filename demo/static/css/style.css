@@ -1,11 +1,38 @@
 body {
-    padding-top: 28px;
-    width: 100%;
-
-    font-family: "Microsoft soft";
+    display: flex; /* 使用Flexbox布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 100vh; /* 容器高度为视口高度的100% */
+    margin: 0; /* 移除默认外边距 */
+    background-color: #f3f3f3; /* 设置背景颜色 */
 }
 
-h1 {
-    text-align: center;
-    color: #1E88C7
+.board {
+    display: grid; /* 使用CSS Grid布局 */
+    grid-template-columns: repeat(15, 30px); /* 创建15列，每列宽30px */
+    grid-template-rows: repeat(15, 30px); /* 创建15行，每行高30px */
+}
+
+.cell {
+    width: 32px; /* 单元格宽度 */
+    height: 32px; /* 单元格高度 */
+    background-color: #fffb14; /*单元格背景颜色*/
+    border: 1px solid #000; /* 单元格边框 */
+    text-align: center; /* 文本居中 */
+    cursor: pointer; /* 鼠标悬停时显示为指针 */
+}
+
+.black, .white {
+    width: 28px; /* 棋子直径 */
+    height: 28px; /* 棋子直径 */
+    border-radius: 50%; /* 圆形棋子 */
+    margin: 1px; /* 棋子与单元格边框的间隙 */
+}
+
+.black {
+    background-color: #000; /* 黑色棋子背景颜色 */
+}
+
+.white {
+    background-color: #fff; /* 白色棋子背景颜色 */
 }
