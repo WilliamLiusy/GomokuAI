@@ -58,7 +58,7 @@ bool Inboard(int x, int y) {
 
 int GetScoreOfContinousChesses(int len, int colour, int type, int perspective)
 {
-    if(len == 5)
+    if(len >= 5)
     {
         return score[perspective][0][colour];
     }
@@ -151,11 +151,26 @@ int UpdateScore(int x_yours, int y_yours, int x_his, int y_his, int your_colour,
 
 
 
-int depth_limit = 5;
-const int INF = 1e8;
+std::vector<std::pair<int, int>> C3DetectionAndReaction() {
 
-int minX, maxX, minY, maxY;
+}
 
+
+int depth_limit()
+{
+    if(turn == 2)
+    {
+        return 3;
+    }
+    else
+    {
+        return 5;
+    }
+
+}
+const int INF = 1e9;
+
+int minX = 15, maxX = -1, minY = 15, maxY = -1;
 void UpdateArea(int x, int y) {
     minX = std::max(std::min(minX, x - 3), 0);
     maxX = std::min(std::max(maxX, x + 3), 14);
@@ -163,9 +178,9 @@ void UpdateArea(int x, int y) {
     maxY = std::min(std::max(maxY, y + 3), 14);
 }
 
-int getMaxValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore, int his_x, int his_y);
-int getMinValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore, int his_x, int his_y) {
-    if(dep > depth_limit)
+int getMaxValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore, int his_x, int his_y, int minX, int maxX, int minY, int maxY);
+int getMinValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore, int his_x, int his_y, int minX, int maxX, int minY, int maxY) {
+    if(dep > depth_limit())
     {
         return MyFacingScore;
     }
@@ -186,13 +201,14 @@ int getMinValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore
         return a.first < b.first;
     });
 
-    for(int i = 0; i < 30; i++)
+    for(int i = 0; i < std::min(40, (int)scores.size()); i++)
     {
         auto u = scores[i];
         int x = u.second.first, y = u.second.second;
         board[x][y] = 1;
-        UpdateArea(x, y);
-        int downMax = getMaxValue(dep + 1, Min, Max, u.first, MyFacingScore, x, y);
+        int downMax = getMaxValue(dep + 1, Min, Max, u.first, MyFacingScore, x, y, 
+                                  std::max(std::min(minX, x - 3), 0), maxX = std::min(std::max(maxX, x + 3), 14), 
+                                  minY = std::max(std::min(minY, y - 3), 0), maxY = std::min(std::max(maxY, y + 3), 14));
         if(downMax < Min)
         {
             Min = downMax;
@@ -206,8 +222,8 @@ int getMinValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore
     return Min;
 }
 
-int getMaxValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore, int his_x, int his_y) {  //I am 0
-    if(dep > depth_limit)
+int getMaxValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore, int his_x, int his_y, int minX, int maxX, int minY, int maxY) {  //I am 0
+    if(dep > depth_limit())
     {
         return MyFacingScore;
     }
@@ -227,15 +243,16 @@ int getMaxValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore
     std::sort(scores.begin(), scores.end(), [](auto x, auto y){
         return x.first > y.first;
     });
-    for(int i = 0; i < 30; i++)
+    for(int i = 0; i < std::min(40, (int)scores.size()); i++)
     {
         auto u = scores[i];
         int x = u.second.first, y = u.second.second;
         if(board[x][y] == -1)
         {
             board[x][y] = 0;
-            UpdateArea(x, y);
-            int downMin = getMinValue(dep + 1, Min, Max, u.first, MyFacingScore, x, y);
+            int downMin = getMinValue(dep + 1, Min, Max, u.first, MyFacingScore, x, y,
+                                      std::max(std::min(minX, x - 3), 0), maxX = std::min(std::max(maxX, x + 3), 14), 
+                                      minY = std::max(std::min(minY, y - 3), 0), maxY = std::min(std::max(maxY, y + 3), 14));
             if(downMin > Max)
             {
                 Max = downMin;
@@ -254,6 +271,8 @@ int getMaxValue(int dep, int Min, int Max, int MyFacingScore, int HisFacingScore
 int my_last_x = -1, my_last_y = -1;
 int MyFacingScore = 0;
 int HisFacingScore = 0;
+
+std::pair<int, int> FlippingMemory;
 
 std::pair<int, int> first_step(std::pair<int, int> loc) {
     turn++;
@@ -320,13 +339,43 @@ std::pair<int, int> action(std::pair<int, int> loc) {
     {
         return first_step(loc);
     }
-    else
+    else if(ai_side == 0 && turn == 1)
     {
         turn++;
+        FlippingMemory = loc;
         int his_x = loc.first, his_y = loc.second;
         UpdateArea(his_x, his_y);
         board[his_x][his_y] = 1 - ai_side;
         MyFacingScore = UpdateScore(my_last_x, my_last_y, his_x, his_y, ai_side, MyFacingScore);
+        my_last_x = 14 - his_x;
+        my_last_y = 14 - his_y;
+        HisFacingScore = UpdateScore(his_x, his_y, my_last_x, my_last_y, 1 - ai_side, HisFacingScore);
+        board[my_last_x][my_last_y] = 0;
+        UpdateArea(my_last_x, my_last_y);
+        return std::make_pair(my_last_x, my_last_y);
+    }
+    else
+    {
+        turn++;
+        int his_x = loc.first, his_y = loc.second;
+
+        //换手，换手时需重算分数
+
+        // if(his_x == -1 && his_y == -1)
+        // {
+        //     board[7][7] = 1;
+        //     board[FlippingMemory.first][FlippingMemory.second] = 0;
+        //     board[14 - FlippingMemory.first][14 - FlippingMemory.second] = 1;
+        //     MyFacingScore = 
+        //     HisFacingScore = UpdateScore(my_last_x, my_last_y, his_x, his_y, ai_side, );
+
+        // }
+        // else
+        // {
+            UpdateArea(his_x, his_y);
+            board[his_x][his_y] = 1 - ai_side;
+            MyFacingScore = UpdateScore(my_last_x, my_last_y, his_x, his_y, ai_side, MyFacingScore);
+        // }
         if(ai_side == 0)
         {
             int ret_x = -2, ret_y = -2;
@@ -347,15 +396,16 @@ std::pair<int, int> action(std::pair<int, int> loc) {
             std::sort(scores.begin(), scores.end(), [](auto x, auto y){
                 return x.first > y.first;
             });
-            for(int i = 0; i < 30; i++)
+            for(int i = 0; i < std::min(40, (int)scores.size()); i++)
             {
                 auto u = scores[i];
                 int x = u.second.first, y = u.second.second;
                 if(board[x][y] == -1)
                 {
                     board[x][y] = 0;
-                    UpdateArea(x, y);
-                    int downMin = getMinValue(0, INF, ans, u.first, MyFacingScore, x, y);
+                    int downMin = getMinValue(0, INF, ans, u.first, MyFacingScore, x, y,
+                                              std::max(std::min(minX, x - 3), 0), maxX = std::min(std::max(maxX, x + 3), 14), 
+                                              minY = std::max(std::min(minY, y - 3), 0), maxY = std::min(std::max(maxY, y + 3), 14));
                     if(downMin > ans)
                     {
                         ans = downMin;
@@ -367,6 +417,7 @@ std::pair<int, int> action(std::pair<int, int> loc) {
             HisFacingScore = UpdateScore(his_x, his_y, ret_x, ret_y, 1 - ai_side, HisFacingScore);
             my_last_x = ret_x, my_last_y = ret_y;
             board[ret_x][ret_y] = 0;
+            UpdateArea(ret_x, ret_y);
             return std::make_pair(ret_x, ret_y);
         }
         else
@@ -390,13 +441,14 @@ std::pair<int, int> action(std::pair<int, int> loc) {
                 return a.first < b.first;
             });
 
-            for(int i = 0; i < 30; i++)
+            for(int i = 0; i < std::min(40, (int)scores.size()); i++)
             {
                 auto u = scores[i];
                 int x = u.second.first, y = u.second.second;
                 board[x][y] = 1;
-                UpdateArea(x, y);
-                int downMax = getMaxValue(0, ans, -INF, u.first, MyFacingScore, x, y);
+                int downMax = getMaxValue(0, ans, -INF, u.first, MyFacingScore, x, y,
+                                          std::max(std::min(minX, x - 3), 0), maxX = std::min(std::max(maxX, x + 3), 14), 
+                                          minY = std::max(std::min(minY, y - 3), 0), maxY = std::min(std::max(maxY, y + 3), 14));
 //                std::cout << downMax << '!' << std::endl;
                 if(downMax < ans)
                 {
@@ -408,6 +460,7 @@ std::pair<int, int> action(std::pair<int, int> loc) {
             HisFacingScore = UpdateScore(his_x, his_y, ret_x, ret_y, 1 - ai_side, HisFacingScore);
             my_last_x = ret_x, my_last_y = ret_y;
             board[ret_x][ret_y] = 1;
+            UpdateArea(ret_x, ret_y);
             return std::make_pair(ret_x, ret_y);
         }
     }

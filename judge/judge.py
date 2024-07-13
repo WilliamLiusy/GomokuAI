@@ -129,6 +129,8 @@ def judge():
         sys.stderr.write('ai0 take action: [' + str(a) + ' ' + str(b) + ']\n')
         ret = board.check_win(0, turn, a, b)
         board.action(0, turn, a, b)
+        
+        
         board.show()
         if ret == -1:
             win(1)

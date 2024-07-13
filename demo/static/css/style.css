@@ -1,38 +1,74 @@
 body {
-    display: flex; /* 使用Flexbox布局 */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-    height: 100vh; /* 容器高度为视口高度的100% */
-    margin: 0; /* 移除默认外边距 */
-    background-color: #f3f3f3; /* 设置背景颜色 */
+    padding-top: 28px;
+    width: 100%;
+
+    font-family: "Microsoft soft";
 }
 
+h1 {
+    text-align: center;
+    color: #1E88C7
+}
+
+/* 棋盘样式 */
 .board {
-    display: grid; /* 使用CSS Grid布局 */
-    grid-template-columns: repeat(15, 30px); /* 创建15列，每列宽30px */
-    grid-template-rows: repeat(15, 30px); /* 创建15行，每行高30px */
+    display: grid;
+    grid-template-columns: repeat(15, 30px);
+    grid-template-rows: repeat(1, 30px); /* 只有一行 */
+    gap: 1px;
+    background-color: #f9f9f9;
+    width: 450px; /* 适应15个单元格的宽度 */
+    margin: 50px auto 0; /* 上边距设为50px，自动左右边距水平居中 */
+    text-align: center;
 }
 
+/* 棋盘单元格样式 */
 .cell {
-    width: 32px; /* 单元格宽度 */
-    height: 32px; /* 单元格高度 */
-    background-color: #fffb14; /*单元格背景颜色*/
-    border: 1px solid #000; /* 单元格边框 */
-    text-align: center; /* 文本居中 */
-    cursor: pointer; /* 鼠标悬停时显示为指针 */
+    width: 30px;
+    height: 30px;
+    background-color: #e6c20e;
+    border: 1px solid #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* 文本样式 */
+.board-text {
+    display: none;
+    position: fixed;
+    margin: 10px 0; /* 上下边距 */
+    text-align: center; /* 水平居中文本 */
+}
+
+/* 按钮容器样式 */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* 与棋盘的间距 */
+}
+
+/* 按钮样式 */
+.button {
+    padding: 10px 20px; /* 内边距 */
+    margin: 0 10px; /* 左右边距，避免按钮之间重叠 */
+    font-size: 16px; /* 字体大小 */
+    cursor: pointer;
+    border: 1px solid #000; /* 边框 */
+    background-color: #fff; /* 背景色 */
+}
+
+/* 棋子样式（示例） */
 .black, .white {
-    width: 28px; /* 棋子直径 */
-    height: 28px; /* 棋子直径 */
-    border-radius: 50%; /* 圆形棋子 */
-    margin: 1px; /* 棋子与单元格边框的间隙 */
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
 }
 
 .black {
-    background-color: #000; /* 黑色棋子背景颜色 */
+    background-color: #000;
 }
 
 .white {
-    background-color: #fff; /* 白色棋子背景颜色 */
+    background-color: #fff;
 }
